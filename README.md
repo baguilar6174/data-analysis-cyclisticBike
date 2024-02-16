@@ -1,20 +1,10 @@
-# Cyclistic bike-share Analysis Case Study
+# [Cyclistic bike-share Analysis Case Study](https://www.kaggle.com/code/bryana/cyclistic-bike-share-analysis)
 
-This case study is about a fictitious company, Cyclistic. Where I will answer business questions, following the steps of the data analysis process: Ask, Prepare, Process, Analyze, Share and Act.
+This project involves analyzing the bike trip data from Cyclistic, a bike-share company based in Chicago, to understand the behavior of its riders and identify opportunities for optimizing marketing strategies. The analysis aims to differentiate between annual members and casual riders, uncover usage patterns, and provide insights to guide business decisions. This case study is about a fictitious company, Cyclistic. Where I will answer business questions, following the steps of the data analysis process: Ask, Prepare, Process, Analyze, Share and Act.
 
 ## Scenario
 
 Cyclistic's marketing director believes that the company's future success depends on maximizing the number of annual members. Therefore, his team wants to understand how casual users and annual members use Cyclistic's bikes differently. From this information, his team will design a new marketing strategy to convert occasional riders into annual members. But first, Cyclistic executives must approve their recommendations, so they must be backed by compelling data and professional data visualizations.
-
-## Characters and teams
-
-- **Cyclistic**: A bike-share program that features more than 5,800 bicycles and 600 docking stations. Cyclistic sets itself apart by also offering reclining bikes, hand tricycles, and cargo bikes, making bike-share more inclusive to people with disabilities and riders who can’t use a standard two-wheeled bike. The majority of riders opt for traditional bikes; about 8% of riders use the assistive options. Cyclistic users are more likely to ride for leisure, but about 30% use the bikes to commute to work each day.
-
-- **Lily Moreno**: The director of marketing and your manager. Moreno is responsible for the development of campaigns and initiatives to promote the bike-share program.ç These may include email, social media, and other channels.
-
-- **Cyclistic marketing analytics team**: A team of data analysts who are responsible for collecting, analyzing, and reporting data that helps guide Cyclistic marketing strategy. You joined this team six months ago and have been busy learning about Cyclistic’s mission and business goals—as well as how you, as a junior data analyst, can help Cyclistic achieve them.
-
-- **Cyclistic executive team**: The notoriously detail-oriented executive team will decide whether to approve the recommended marketing program.
 
 ## About the company
 
@@ -35,9 +25,9 @@ Moreno has set a clear goal: Design marketing strategies aimed at converting cas
 5. Supporting visualizations and key findings
 6. Your top three recommendations based on your analysis
 
-## Ask phase
+# Analysis Phases
 
-In the Ask phase, we define the key questions that will guide our analysis and help us understand the behavior of Cyclistic's customers.
+## Ask phase
 
 Three questions will guide the future marketing program:
 
@@ -157,7 +147,7 @@ Categorizing riders into different types allows us to distinguish between annual
 
 Some files may contain null or empty values, which need to be addressed during data preprocessing. Techniques such as imputation or removal of incomplete records may be necessary to ensure data quality and integrity.
 
-# Process Phase
+## Process Phase
 
 - In the processing phase, the data sets were stored in csv format in Kaggle.
 - Subsequently, all these files were read and a single dataframe was created using the pandas and glob libraries.
@@ -181,14 +171,167 @@ Some files may contain null or empty values, which need to be addressed during d
 
   - ride_length: ride duration (ended_at - started_at)
   - day_of_week: Monday, Tuesday, ...
-  - day_of_week_as_number: 0, 1, 2, ...
-  - quarter:
-  - day_of_month: Day of the month taken from started_at
   - month: Name of the month, taken from started_at
-  - started_time: hour and minutes, taken from started_at
-  - ended_time: hour and minutes, taken from ended_time
-  - weekday_or_weekend: Identify if the day is a week day or a weekend
+  - ride_start_hour: Hour taken from started_at (ex. 15, 13, 19, ...)
+  - ride_length_days: ride duration in days
+  - ride_length_minutes: ride duration in minutes
 
-# Analyze Phase
+- Finally, records with a negative duration have been eliminated to avoid conflicts in the analysis.
 
-...
+## Analyze Phase
+
+In this pass, important statistical data and calculations have been obtained for the analysis:
+
+-  Calculate the average ride_length_minutes by membership
+
+| Membership | Average Ride Length mins |
+|--------|------------|
+| casual | 28.25 mins |
+| member | 12.53 mins |
+
+
+-  Calculate the median ride_length_minutes by membership
+
+| Membership | Median Ride Length mins |
+|--------|------------|
+| casual | 11.85 mins |
+| member | 8.52 mins |
+
+
+-  Calculate the average ride_length_minutes by membership by day_of_week
+
+| Membership  | Day of week | Average Ride Length mins |
+|--------|----------|-------|
+| casual | Friday   | 27.26 mins |
+|        | Monday   | 27.71 mins |
+|        | Saturday | 32.14 mins |
+|        | Sunday | 32.86 mins |
+|        | Thursday | 24.73 mins |
+|        | Tuesday | 25.08 mins |
+|        | Wednesday | 24.30 mins |
+| member | Friday   | 12.48 mins |
+|        | Monday   | 11.90 mins |
+|        | Saturday | 13.94 mins |
+|        | Sunday | 13.99 mins |
+|        | Thursday | 12.02 mins |
+|        | Tuesday | 12.01 mins |
+|        | Wednesday | 11.95 mins |
+
+-  Calculate the max ride_length_minutes by membership
+
+| Membership | Max Ride Length mins |
+|--------|------------|
+| casual | 98489.07 mins |
+| member | 1559.67 mins |
+
+-  Calculate the mode day_of_week: ´Saturday´
+
+-   Calculate the number of rides by membership by day_of_week
+
+| Membership  | Day of week | Total Rides |
+|--------|----------|-------|
+| casual | Friday   | 311907 |
+|        | Monday   | 234818 |
+|        | Saturday | 410684 |
+|        | Sunday | 335668 |
+|        | Thursday | 270596 |
+|        | Tuesday | 246211 |
+|        | Wednesday | 249153 |
+| member | Friday   | 531582 |
+|        | Monday   | 494558 |
+|        | Saturday | 472846 |
+|        | Sunday | 408829 |
+|        | Thursday | 589572 |
+|        | Tuesday | 576743 |
+|        | Wednesday | 586438 |
+
+-   Calculate the total rides by membership
+
+| Membership | Total Rides |
+|--------|------------|
+| casual | 2059037 |
+| member | 3660568 |
+
+-   Calculate the total rides by membership by bike type
+
+| Membership  | Bike Type | Total Rides |
+|--------|----------|-------|
+| casual | classic_bike   | 876858 |
+|        | docked_bike   | 78287 |
+|        | electric_bike | 1103892 |
+| member | classic_bike   | 1819110 |
+|        | electric_bike   | 1841458 |
+
+## Share Phase
+
+### Were you able to answer the question of how annual members and casual riders use Cyclistic bikes differently?
+
+Yes, the data provides insights into the differences between annual members and casual riders in terms of ride length, day of the week usage patterns, and bike type preferences. Casual riders tend to have longer average and median ride lengths compared to annual members, and they predominantly use electric bikes. Annual members, on the other hand, have shorter ride lengths and prefer classic bikes.
+
+### What story does your data tell?
+
+The data reveals distinct usage patterns and preferences between annual members and casual riders. It suggests that casual riders may use Cyclistic bikes more for leisure or longer trips, while annual members may use them for shorter, more frequent trips, possibly for commuting or everyday activities.
+
+### How do your findings relate to your original question?
+
+The findings provide valuable insights into the behavior and preferences of Cyclistic's customer segments, which directly addresses the original question of understanding how annual members and casual riders use the bikes differently. These insights can inform targeted marketing strategies aimed at converting casual riders into annual members.
+
+### Who is your audience? What is the best way to communicate with them?
+
+The audience includes Cyclistic's marketing team, executives, and stakeholders involved in decision-making processes. Communicating findings through concise reports, presentations, and interactive visualizations can effectively convey the insights and recommendations to different stakeholders.
+
+### Can data visualization help you share your findings?
+
+Absolutely, data visualization can be instrumental in presenting key findings in a clear, engaging manner. Visualizations such as bar charts, pie charts, line graphs, and heatmaps can effectively illustrate trends, comparisons, and distributions in the data.
+
+> The generated visualizations can be viewed in the attached Jupiter notebook or at [this kaggle link](https://www.kaggle.com/code/bryana/cyclistic-bike-share-analysis).
+
+## Act Phase
+
+Based on the analysis of Cyclistic's bike trip data, it is evident that there are notable differences in the behavior and preferences of annual members and casual riders. Casual riders tend to engage in longer trips, primarily on weekends, and prefer electric bikes. Annual members, on the other hand, opt for shorter trips, frequently utilize classic bikes, and exhibit more consistent usage patterns throughout the week.
+
+The company can attract casual riders to become members by offering discounts on weekends, as casual riders tend to prefer riding during this time. Since casual riders often ride for longer durations, the company should also consider implementing flexible pricing for extended rides among those who become members. While member riders maintain consistency throughout the year, casual riders show a preference for the summer season. Therefore, the company should focus on improved marketing strategies and flexible pricing options during the summer to encourage casual riders to transition into members. Initiating a marketing campaign highlighting the advantages of membership during the summer, weekends, and for longer rides could effectively promote this transition.
+
+On average, casual users take longer trips, lasting about 28 minutes, compared to members who take trips averaging 12 minutes. Casual users' trip lengths vary greatly throughout the week, peaking on weekends, while members consistently take trips of similar lengths, suggesting they are regular routines. Member users primarily use the service to commute to and from work, as indicated by peaks in usage at 8am and 6pm, which are not observed among casual users or on weekends.
+
+### Recommendations:
+
+##### Targeted Marketing Campaigns:
+
+- Develop targeted marketing campaigns aimed at converting casual riders into annual members. Highlight the benefits of annual memberships, such as convenience, cost savings, and access to a wider range of bike options. Tailor messaging to address the specific needs and preferences of casual riders, emphasizing the value proposition of becoming a Cyclistic member.
+- A better analysis is possible if data are collected correctly for columns such as (start_station_name, start_station_id, end_station_name, end_station_id). This data would provide accurate information about the locations where users make the most or least amount of bike trips and you can create marketing campaigns targeted to those specific locations or even consider opening new stations and closing others.
+- Make a summer promotion; lower price only available in summer. Make a weekend member program. Special weekend like special price only for member.
+
+#### Promotional Offers and Incentives:
+
+- Offer promotional discounts or incentives to encourage casual riders to sign up for annual memberships. Consider limited-time offers, referral programs, or exclusive benefits for new members to incentivize conversion. Utilize digital media channels to promote these offers and engage with potential members effectively.
+- A loyalty program can be introduced where occasional yet regular users have the opportunity to exchange their accumulated points for a membership package at a reduced price.
+
+#### Enhanced Rider Experience:
+
+Focus on enhancing the overall rider experience for both annual members and casual riders. This could involve improving bike availability, optimizing station locations, and introducing additional features or services that cater to diverse user needs. By prioritizing customer satisfaction and convenience, Cyclistic can attract and retain more members over time.
+
+
+Next Steps:
+
+- Implement the recommended marketing strategies and promotional campaigns based on the insights gathered from the analysis.
+- Monitor and track the effectiveness of the initiatives through key performance indicators (KPIs) such as membership sign-ups, conversion rates, and rider feedback.
+- Continuously analyze customer feedback and usage data to identify opportunities for further optimization and refinement of marketing efforts.
+
+---
+
+Exploring additional data sources such as customer surveys, demographic information, and user feedback could provide deeper insights into the motivations and preferences of Cyclistic's customer base. Incorporating qualitative data alongside quantitative analysis can offer a more comprehensive understanding of customer behavior and inform future decision-making processes.
+
+## Built with
+
+- Python
+- Pandas
+- Matplotlib
+- Jupyter Notebook
+- Seaborn
+
+## Stay in touch
+
+- Website - [www.bryan-aguilar.com](https://www.bryan-aguilar.com/)
+- Medium - [baguilar6174](https://baguilar6174.medium.com/)
+- LinkeIn - [baguilar6174](https://www.linkedin.com/in/baguilar6174)
